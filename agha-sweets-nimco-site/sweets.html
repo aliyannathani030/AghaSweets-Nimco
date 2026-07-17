@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sweets Menu — Agha Sweets & Nimco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Mukta:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF3E4;
+    --card:#FFFDF8;
+    --red:#A32638;
+    --red-dark:#7C1B29;
+    --mustard:#E2A331;
+    --mustard-dark:#C6871A;
+    --teal:#1F6F5C;
+    --ink:#2A2118;
+    --ink-soft:#5A4E42;
+    --line:#E7D9BF;
+    --shadow: 0 10px 30px rgba(42,33,24,0.08);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Mukta',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Yeseva One',serif; font-weight:400;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(251,243,228,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px; max-width:1120px; margin:0 auto;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Yeseva One',serif; font-size:20px; color:var(--red); text-decoration:none;}
+  .brand-dot{width:10px;height:10px;border-radius:50%;background:var(--mustard);}
+  nav.links{display:flex; gap:28px; font-size:15px; font-weight:600;}
+  nav.links a{text-decoration:none; color:var(--ink); position:relative; padding:4px 0;}
+  nav.links a:hover, nav.links a.active{color:var(--red);}
+  .nav-cta{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--teal); color:#fff; padding:9px 16px; border-radius:6px;
+    font-weight:700; font-size:14px; text-decoration:none;
+    box-shadow:var(--shadow);
+  }
+  .nav-toggle{display:none; background:none; border:none; font-size:24px; cursor:pointer; color:var(--red);}
+
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 85% 20%, rgba(226,163,49,0.35), transparent 45%),
+      linear-gradient(180deg, var(--red) 0%, var(--red-dark) 100%);
+    color:#fff; overflow:hidden;
+  }
+  .hero-inner{
+    max-width:1120px; margin:0 auto; padding:88px 24px 96px;
+    display:grid; grid-template-columns:1.3fr 0.9fr; gap:40px; align-items:center;
+  }
+  .hero.page-hero .hero-inner{
+    grid-template-columns:1fr; padding:64px 24px 72px; text-align:left;
+  }
+  .badge{
+    display:inline-flex; flex-direction:column; align-items:center; justify-content:center;
+    width:96px; height:96px; border-radius:50%;
+    border:2px dashed rgba(255,255,255,0.65);
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em;
+    margin-bottom:22px; text-align:center; line-height:1.3;
+  }
+  .badge b{font-size:20px; display:block; font-family:'Yeseva One',serif;}
+  .hero h1{font-size:52px; line-height:1.08; margin:0 0 18px; text-shadow:0 2px 12px rgba(0,0,0,0.15);}
+  .hero.page-hero h1{font-size:40px;}
+  .hero p.tag{font-size:18px; max-width:520px; color:rgba(255,255,255,0.92); margin:0 0 30px;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 22px; border-radius:6px; font-weight:700; font-size:15px;
+    text-decoration:none; transition:transform .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--mustard); color:var(--ink);}
+  .btn-outline{border:1.5px solid rgba(255,255,255,0.7); color:#fff;}
+
+  .ticket{
+    background:var(--card); color:var(--ink); border-radius:10px;
+    padding:26px; box-shadow:0 20px 50px rgba(0,0,0,0.25);
+    position:relative;
+    transform:rotate(2deg);
+  }
+  .ticket::before, .ticket::after{
+    content:""; position:absolute; width:20px; height:20px; background:var(--red-dark);
+    border-radius:50%; top:50%; transform:translateY(-50%);
+  }
+  .ticket::before{left:-10px;}
+  .ticket::after{right:-10px;}
+  .ticket h3{margin:0 0 6px; color:var(--red); font-size:20px;}
+  .ticket p{margin:0 0 14px; font-size:14px; color:var(--ink-soft);}
+  .ticket .price{font-family:'IBM Plex Mono',monospace; font-size:28px; font-weight:600; color:var(--teal);}
+  .ticket .price span{font-size:14px; color:var(--ink-soft); font-family:'Mukta',sans-serif;}
+
+  section{padding:84px 0;}
+  .eyebrow{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:12px;
+    letter-spacing:0.12em; text-transform:uppercase; color:var(--teal);
+    background:rgba(31,111,92,0.09); padding:6px 12px; border-radius:20px; margin-bottom:14px;
+  }
+  .section-head{max-width:640px; margin-bottom:44px;}
+  .section-head h2{font-size:36px; margin:0 0 12px; color:var(--ink);}
+  .section-head p{font-size:16px; color:var(--ink-soft); margin:0; line-height:1.6;}
+
+  .about{background:var(--card); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .about .wrap{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+  .about-visual{
+    aspect-ratio:4/3; border-radius:14px;
+    background:
+      repeating-linear-gradient(135deg, rgba(163,38,56,0.08) 0 12px, transparent 12px 24px),
+      linear-gradient(135deg, var(--mustard) 0%, var(--red) 100%);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-family:'Yeseva One',serif; font-size:26px; text-align:center; padding:30px;
+    box-shadow:var(--shadow);
+  }
+  .about-copy p{font-size:16px; line-height:1.75; color:var(--ink-soft);}
+  .stat-row{display:flex; gap:32px; margin-top:28px; flex-wrap:wrap;}
+  .stat b{display:block; font-family:'Yeseva One',serif; font-size:30px; color:var(--red);}
+  .stat span{font-size:13px; color:var(--ink-soft);}
+
+  .menu-teasers{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .teaser-card{
+    background:var(--card); border:1px solid var(--line); border-radius:14px; padding:30px;
+    text-decoration:none; color:var(--ink); box-shadow:var(--shadow);
+    transition:transform .15s ease;
+    display:block;
+  }
+  .teaser-card:hover{transform:translateY(-4px);}
+  .teaser-card .eyebrow{margin-bottom:16px;}
+  .teaser-card h3{font-size:24px; margin:0 0 8px;}
+  .teaser-card p{font-size:14.5px; color:var(--ink-soft); margin:0 0 16px; line-height:1.55;}
+  .teaser-card .go{font-weight:700; color:var(--red); font-size:14px;}
+
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .item-card{
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:18px 20px; display:flex; justify-content:space-between; align-items:center;
+    box-shadow:0 2px 6px rgba(42,33,24,0.04);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .item-card:hover{transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--mustard);}
+  .item-card .name{font-weight:600; font-size:15.5px;}
+  .item-card .price{font-family:'IBM Plex Mono',monospace; font-weight:600; color:var(--red); font-size:15px; white-space:nowrap; margin-left:14px;}
+
+  .nimco-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:0; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:var(--card);}
+  .nimco-item{
+    display:flex; justify-content:space-between; padding:13px 22px;
+    border-bottom:1px solid var(--line); font-size:15px;
+  }
+  .nimco-item:nth-child(odd){border-right:1px solid var(--line);}
+  .nimco-item .price{font-family:'IBM Plex Mono',monospace; color:var(--teal); font-weight:600;}
+
+  .drinks-cat{margin-bottom:34px;}
+  .drinks-cat h4{
+    display:inline-block; background:var(--mustard); color:var(--ink); font-weight:700;
+    padding:6px 14px; border-radius:6px; font-size:14px; margin:0 0 14px; text-transform:uppercase; letter-spacing:.03em;
+  }
+  .drinks-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  .drink-chip{
+    background:var(--card); border:1px solid var(--line); border-radius:8px; padding:14px;
+    text-align:center;
+  }
+  .drink-chip .name{font-weight:600; font-size:14px; display:block; margin-bottom:4px;}
+  .drink-chip .size{font-size:12px; color:var(--ink-soft); display:block; margin-bottom:8px;}
+  .drink-chip .price{font-family:'IBM Plex Mono',monospace; color:var(--red); font-weight:600;}
+
+  section.sweets-sec{background:var(--cream);}
+  section.nimco-sec{background:var(--card); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  section.drinks-sec{background:var(--cream);}
+
+  .contact{background:linear-gradient(180deg, var(--ink) 0%, #1b1510 100%); color:#fff;}
+  .contact .wrap{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  .contact h2{color:#fff;}
+  .contact-list{list-style:none; padding:0; margin:0 0 28px;}
+  .contact-list li{display:flex; gap:14px; margin-bottom:18px; font-size:15px; align-items:flex-start;}
+  .contact-list b{display:block; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--mustard); margin-bottom:2px;}
+  .contact-list a{text-decoration:underline; text-decoration-color:rgba(255,255,255,0.3);}
+  .social-row{display:flex; gap:12px; margin-top:10px;}
+  .social-row a{
+    width:42px;height:42px;border-radius:50%; border:1px solid rgba(255,255,255,0.25);
+    display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:15px;
+  }
+  .hours-card{background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:12px; padding:26px;}
+  .hours-card h3{margin:0 0 16px; font-size:20px; color:var(--mustard);}
+  .hours-row{display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.1); font-size:14.5px;}
+  .hours-row:last-child{border-bottom:none;}
+
+  footer{background:#1b1510; color:rgba(255,255,255,0.55); text-align:center; padding:26px 24px; font-size:13px;}
+  footer a{color:var(--mustard); text-decoration:none;}
+  .foot-links{margin-bottom:10px;}
+  .foot-links a{margin:0 10px;}
+
+  .note{font-size:12.5px; color:var(--ink-soft); font-style:italic; margin-top:10px;}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  @media (max-width:860px){
+    nav.links{display:none;}
+    .nav-toggle{display:block;}
+    .hero-inner{grid-template-columns:1fr; text-align:left;}
+    .hero h1{font-size:38px;}
+    .about .wrap, .contact .wrap{grid-template-columns:1fr;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .nimco-grid{grid-template-columns:1fr;}
+    .nimco-item:nth-child(odd){border-right:none;}
+    .drinks-grid{grid-template-columns:repeat(2,1fr);}
+    .menu-teasers{grid-template-columns:1fr;}
+  }
+  @media (max-width:480px){
+    .grid{grid-template-columns:1fr;}
+    .drinks-grid{grid-template-columns:1fr 1fr;}
+    .hero-inner{padding:64px 20px 72px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1; transform:none; transition:none;}
+    .item-card, .btn{transition:none;}
+  }
+
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html"><span class="brand-dot"></span> Agha Sweets &amp; Nimco</a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="sweets.html" class="active">Sweets</a>
+      <a href="nimco.html">Nimco</a>
+      <a href="cold-drinks.html">Cold Drinks</a>
+      <a href="index.html#contact">Visit Us</a>
+    </nav>
+    <a class="nav-cta" href="https://wa.me/923333279021?text=Assalam-o-Alaikum%2C%20I%27d%20like%20to%20order%20from%20Agha%20Sweets%20%26%20Nimco" target="_blank" rel="noopener">WhatsApp Order</a>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+<section class="hero page-hero">
+  <div class="hero-inner">
+    <div>
+      <h1 class="display">Sweets Menu</h1>
+      <p class="tag">Fresh mithai made in-house every morning. Priced per kg unless noted — ask in-store for half-kg or box packing for events.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="https://wa.me/923333279021?text=Assalam-o-Alaikum%2C%20I%27d%20like%20to%20order%20sweets" target="_blank" rel="noopener">Order Sweets on WhatsApp</a>
+        <a class="btn btn-outline" href="tel:+923333279021">Call to Order</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sweets-sec">
+  <div class="wrap">
+    <div class="grid reveal">
+      <div class="item-card"><span class="name">Gulab Jamun<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Ras Malai<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Doodh Barfi<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Kaju Katli<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Gajar Halwa<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Sohan Halwa<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Jalebi<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Rasgulla<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Kalakand<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Besan Ladoo<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Balushahi<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Pista Barfi<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Motichoor Ladoo<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Imarti<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+<div class="item-card"><span class="name">Khoya Barfi<br><span style="font-weight:400;color:var(--ink-soft);font-size:12px;">per kg</span></span><span class="price">Rs. —</span></div>
+    </div>
+    <p class="note">Prices subject to change without notice.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-links">
+    <a href="index.html">Home</a>|<a href="sweets.html">Sweets</a>|<a href="nimco.html">Nimco</a>|<a href="cold-drinks.html">Cold Drinks</a>|<a href="index.html#contact">Visit Us</a>
+  </div>
+  © <span id="year"></span> Agha Sweets &amp; Nimco — Since 1990. All rights reserved.
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
